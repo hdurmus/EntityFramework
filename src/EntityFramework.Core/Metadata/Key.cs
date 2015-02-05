@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
@@ -44,6 +45,11 @@ namespace Microsoft.Data.Entity.Metadata
         IEntityType IKey.EntityType
         {
             get { return EntityType; }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {{{1}}}", EntityType, Properties.Select(p => p.Name).Join(" "));
         }
     }
 }

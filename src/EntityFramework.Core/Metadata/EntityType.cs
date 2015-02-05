@@ -356,6 +356,14 @@ namespace Microsoft.Data.Entity.Metadata
                 throw new ArgumentException(Strings.ForeignKeyPropertiesWrongEntity(Property.Format(properties), Name));
             }
 
+            for (var index = 0; index < properties.Count; index++)
+            {
+                if (foreignKey.GetRootPrincipals(index).Any(p => p == properties[index]))
+                {
+                    throw new InvalidOperationException(string.Format("Adding the key would create a circular reference {0}", foreignKey));
+                }
+            }
+
             _foreignKeys.Value.Add(properties, foreignKey);
 
             UpdateOriginalValueIndexes();

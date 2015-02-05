@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Metadata;
 using Xunit;
 
@@ -46,25 +44,6 @@ namespace Microsoft.Data.Entity.Tests
             Assert.Equal(
                 new[] { model.GetEntityType(typeof(Product)).GetProperty("Id") },
                 model.GetEntityType(typeof(OrderDetails)).ForeignKeys.Single(k => k.Properties.First().Name == "ProductId").GetRootPrincipals(0));
-        }
-
-        [Fact]
-        public void Get_root_principals_throws_on_circular_FKs()
-        {
-            var chickenType = new EntityType("Chicken", new Model());
-            var chickenId = chickenType.AddProperty("Id", typeof(int), true);
-            var chickenKey = chickenType.AddKey(chickenId);
-
-            var eggType = new EntityType("Egg", new Model());
-            var eggId = eggType.AddProperty("Id", typeof(int), true);
-            var eggKey = eggType.AddKey(eggId);
-
-            var chickenFk = chickenType.AddForeignKey(chickenId, eggKey);
-            var eggFk = eggType.AddForeignKey(eggId, chickenKey);
-
-            Assert.Equal(
-                Strings.CircularDependency(new[] { chickenFk, eggFk, chickenFk }.Join(" -> ")),
-                Assert.Throws<InvalidOperationException>(() => chickenFk.GetRootPrincipals(0).ToList()).Message);
         }
 
         private class Category

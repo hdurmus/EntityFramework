@@ -165,7 +165,7 @@ namespace Microsoft.Data.Entity.Metadata
 
         public override string ToString()
         {
-            return Properties.Select(p => EntityType.Name + "." + p.Name).Join(" ");
+            return string.Format("{0} -> {1}",  base.ToString(), ReferencedKey);
         }
     }
 }

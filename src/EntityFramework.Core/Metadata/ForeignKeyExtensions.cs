@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Utilities;
 
 namespace Microsoft.Data.Entity.Metadata
@@ -96,7 +98,20 @@ namespace Microsoft.Data.Entity.Metadata
         public static IEnumerable<IProperty> GetRootPrincipals(
             [NotNull] this IForeignKey foreignKey, int propertyIndex)
         {
+            return GetRootPrincipals(foreignKey, propertyIndex, new List<IForeignKey>());
+        }
+
+        private static IEnumerable<IProperty> GetRootPrincipals(IForeignKey foreignKey, int propertyIndex, List<IForeignKey> visitedKeys)
+        {
             Check.NotNull(foreignKey, "foreignKey");
+
+            if (visitedKeys.Contains(foreignKey))
+            {
+                visitedKeys.Add(foreignKey);
+
+                throw new InvalidOperationException(Strings.CircularDependency(visitedKeys.Join(" -> ")));
+            }
+            visitedKeys.Add(foreignKey);
 
             var principalProperty = foreignKey.ReferencedProperties[propertyIndex];
             var isForeignKey = false;
@@ -108,7 +123,7 @@ namespace Microsoft.Data.Entity.Metadata
                     {
                         isForeignKey = true;
 
-                        foreach (var rootPrincipal in GetRootPrincipals(nextForeignKey, nextIndex))
+                        foreach (var rootPrincipal in GetRootPrincipals(nextForeignKey, nextIndex, visitedKeys))
                         {
                             yield return rootPrincipal;
                         }

@@ -52,6 +52,7 @@ namespace Microsoft.Framework.DependencyInjection
                 .AddSingleton<ClrCollectionAccessorSource>()
                 .AddSingleton<CollectionTypeFactory>()
                 .AddSingleton<EntityMaterializerSource>()
+                .AddSingleton<ModelValidator, ThrowingModelValidator>()
                 .AddSingleton<MemberMapper>()
                 .AddSingleton<FieldMatcher>()
                 .AddSingleton<OriginalValuesFactory>()

@@ -38,6 +38,7 @@ namespace Microsoft.Data.Entity.Tests
             VerifySingleton<ClrCollectionAccessorSource>();
             VerifySingleton<CollectionTypeFactory>();
             VerifySingleton<EntityMaterializerSource>();
+            VerifySingleton<ModelValidator>();
             VerifySingleton<MemberMapper>();
             VerifySingleton<FieldMatcher>();
             VerifySingleton<OriginalValuesFactory>();

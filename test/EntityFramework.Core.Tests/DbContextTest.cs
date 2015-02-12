@@ -1430,7 +1430,8 @@ namespace Microsoft.Data.Entity.Tests
             var servicesMock = new Mock<DataStoreServices>();
             servicesMock.Setup(m => m.Store).Returns(store.Object);
             servicesMock.Setup(m => m.ModelBuilderFactory).Returns(new ModelBuilderFactory());
-            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder()) { CallBase = true }.Object);
+            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder(), Mock.Of<ModelValidator>())
+                { CallBase = true }.Object);
 
             var sourceMock = new Mock<DataStoreSource>();
             sourceMock.Setup(m => m.IsAvailable).Returns(true);
@@ -1475,7 +1476,8 @@ namespace Microsoft.Data.Entity.Tests
             servicesMock.Setup(m => m.Store).Returns(store.Object);
             servicesMock.Setup(m => m.ValueGeneratorCache).Returns(valueGenMock.Object);
             servicesMock.Setup(m => m.ModelBuilderFactory).Returns(new ModelBuilderFactory());
-            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder()) { CallBase = true }.Object);
+            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder(), Mock.Of<ModelValidator>())
+                { CallBase = true }.Object);
 
             var sourceMock = new Mock<DataStoreSource>();
             sourceMock.Setup(m => m.IsAvailable).Returns(true);
@@ -1524,7 +1526,8 @@ namespace Microsoft.Data.Entity.Tests
             servicesMock.Setup(m => m.Store).Returns(store.Object);
             servicesMock.Setup(m => m.ValueGeneratorCache).Returns(valueGenMock.Object);
             servicesMock.Setup(m => m.ModelBuilderFactory).Returns(new ModelBuilderFactory());
-            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder()) { CallBase = true }.Object);
+            servicesMock.Setup(m => m.ModelSource).Returns(new Mock<ModelSourceBase>(new DbSetFinder(), Mock.Of<ModelValidator>())
+                { CallBase = true }.Object);
 
             var sourceMock = new Mock<DataStoreSource>();
             sourceMock.Setup(m => m.IsAvailable).Returns(true);

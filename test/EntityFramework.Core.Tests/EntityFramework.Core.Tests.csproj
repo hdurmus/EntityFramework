@@ -111,6 +111,7 @@
     <Compile Include="EntitySetFinderTest.cs" />
     <Compile Include="Extensions\EntityServiceCollectionExtensionsTest.cs" />
     <Compile Include="Extensions\ForeignKeyExtensionsTest.cs" />
+    <Compile Include="Extensions\PropertyExtensionsTest.cs" />
     <Compile Include="Extensions\ServiceProviderExtensionsTest.cs" />
     <Compile Include="Extensions\TaskExtensionsTest.cs" />
     <Compile Include="Identity\ForeignKeyValuePropagatorTest.cs" />

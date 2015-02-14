@@ -15,25 +15,6 @@ namespace Microsoft.Data.Entity.Tests.Metadata
 {
     public class EntityTypeTest
     {
-
-        [Fact]
-        public void Adding_FK_that_would_create_circular_reference_throws()
-        {
-            var chickenType = new EntityType("Chicken", new Model());
-            var chickenId = chickenType.AddProperty("Id", typeof(int), true);
-            var chickenKey = chickenType.AddKey(chickenId);
-
-            var eggType = new EntityType("Egg", new Model());
-            var eggId = eggType.AddProperty("Id", typeof(int), true);
-            var eggKey = eggType.AddKey(eggId);
-
-            var chickenFk = chickenType.AddForeignKey(chickenId, eggKey);
-
-            Assert.Equal(
-                "Adding the key would create a circular reference ",
-                Assert.Throws<InvalidOperationException>(() => eggType.AddForeignKey(eggId, chickenKey)).Message);
-        }
-
         private readonly Model _model = BuildModel();
 
         [Fact]

@@ -162,10 +162,5 @@ namespace Microsoft.Data.Entity.Metadata
         {
             get { return IsRequired ?? DefaultIsRequired; }
         }
-
-        public override string ToString()
-        {
-            return string.Format("{0} -> {1}",  base.ToString(), ReferencedKey);
-        }
     }
 }
